@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A7D | Profile</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Cairo', sans-serif;
+            background-color: transparent;
+            color: #ffffff;
+        }
+
+        /* فيديو الخلفية بملء الشاشة */
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        /* طبقة تظليل خفيفة لوضوح النص */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.25);
+            z-index: -1;
+        }
+
+        /* التصميم الزجاجي */
+        .glass-card {
+            background: rgba(15, 15, 20, 0.45);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* توهج الاسم */
+        .neon-name {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                         0 0 20px rgba(220, 38, 38, 0.8),
+                         0 0 35px rgba(22, 163, 74, 0.6);
+        }
+
+        /* شاشة الدخول */
+        #enter-screen {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(8px);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .pulse-text {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.04); }
+        }
+
+        /* شريط التقدم للموسيقى */
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            height: 4px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- فيديو الخلفية -->
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="video.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+
+    <!-- الصوت (الشيلة) -->
+    <audio id="bg-audio" loop>
+        <source src="audio.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- شاشة الدخول -->
+    <div id="enter-screen" onclick="enterSite()">
+        <div class="text-center">
+            <p class="text-2xl md:text-3xl font-bold tracking-widest text-white pulse-text">
+                [ اضغط للدخول ]
+            </p>
+        </div>
+    </div>
+
+    <!-- زر التحكم بالصوت أعلى اليسار -->
+    <button id="mute-btn" onclick="toggleMute()" class="glass-card fixed top-5 left-5 w-11 h-11 rounded-xl flex items-center justify-center text-white hover:scale-110 transition z-20">
+        <i id="mute-icon" class="fas fa-volume-up text-lg"></i>
+    </button>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="w-full max-w-md flex flex-col gap-3 z-10">
+        
+        <!-- البطاقة الرئيسية -->
+        <div class="glass-card rounded-2xl p-6 text-center relative">
+            <!-- الصورة الشخصية -->
+            <div class="relative w-24 h-24 mx-auto mb-3">
+                <img src="https://cdn.discordapp.com/attachments/1550795807525970040/1570482758545965217/unnamed-file-32.jpg?ex=6af7418b&is=6af5f00b&hm=c3b665b5dbac8478dbdb30b493f4c5a3355fa5cc3dfb605ced20b2e029d470fa&" 
+                     alt="A7D" 
+                     class="w-full h-full object-cover rounded-full border-2 border-white/60 shadow-lg">
+            </div>
+
+            <!-- الاسم -->
+            <h1 class="text-3xl font-black tracking-wider neon-name mb-1">A7D</h1>
+
+            <!-- الوصف والموقع -->
+            <p class="text-sm text-gray-200 mb-2">عُماني وافتخر 🇴🇲</p>
+            <div class="flex items-center justify-center gap-1.5 text-xs text-gray-300 mb-5">
+                <i class="fas fa-location-dot text-red-400"></i>
+                <span>Sultanate of Oman</span>
+            </div>
+
+            <!-- أيقونات التواصل -->
+            <div class="flex items-center justify-center gap-4 mb-2">
+                <!-- Discord -->
+                <a href="https://discord.gg/MHKQuJ7Grw" target="_blank" title="Discord"
+                   class="w-11 h-11 rounded-xl bg-white/10 hover:bg-[#5865F2] flex items-center justify-center text-xl transition duration-300 hover:scale-110">
+                    <i class="fab fa-discord"></i>
+                </a>
+
+                <!-- Kick -->
+                <a href="https://kick.com/shsjsjqiiweuueieieiei" target="_blank" title="KICK"
+                   class="w-11 h-11 rounded-xl bg-white/10 hover:bg-[#53FC18] hover:text-black flex items-center justify-center font-black text-lg transition duration-300 hover:scale-110">
+                    K
+                </a>
+            </div>
+
+            <!-- عداد المشاهدات -->
+            <div class="absolute bottom-3 left-4 flex items-center gap-1.5 text-xs text-gray-300/80">
+                <i class="fas fa-eye"></i>
+                <span id="view-count">1,420</span>
+            </div>
+        </div>
+
+        <!-- مشغل الموسيقى السفلي -->
+        <div class="glass-card rounded-2xl p-3.5 flex items-center gap-3" dir="ltr">
+            <!-- أيقونة الموسيقى -->
+            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                <i class="fas fa-music text-xl text-white"></i>
+            </div>
+
+            <!-- معلومات الأغنية والشريط -->
+            <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center mb-1">
+                    <p class="text-xs font-bold text-white truncate">شيلة جيشنا يا جيشنا 🇴🇲</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span id="current-time" class="text-[10px] text-gray-300 w-7">0:00</span>
+                    <input type="range" id="progress-bar" value="0" min="0" max="100" class="flex-1">
+                    <span id="duration" class="text-[10px] text-gray-300 w-7">0:00</span>
+                </div>
+            </div>
+
+            <!-- أزرار التحكم -->
+            <div class="flex items-center gap-2.5 text-white shrink-0 pr-1">
+                <button onclick="skip(-5)" class="hover:text-gray-300 transition text-xs">
+                    <i class="fas fa-backward-step"></i>
+                </button>
+                <button onclick="togglePlay()" class="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+                    <i id="play-icon" class="fas fa-pause text-xs"></i>
+                </button>
+                <button onclick="skip(5)" class="hover:text-gray-300 transition text-xs">
+                    <i class="fas fa-forward-step"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const video = document.getElementById('bg-video');
+        const audio = document.getElementById('bg-audio');
+        const enterScreen = document.getElementById('enter-screen');
+        const playIcon = document.getElementById('play-icon');
+        const muteIcon = document.getElementById('mute-icon');
+        const progressBar = document.getElementById('progress-bar');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+
+        // الدخول وتشغيل الوسائط
+        function enterSite() {
+            enterScreen.style.opacity = '0';
+            enterScreen.style.visibility = 'hidden';
+            video.play();
+            audio.play().catch(e => console.log("Audio play prevented:", e));
+            playIcon.classList.replace('fa-play', 'fa-pause');
+        }
+
+        // تشغيل / إيقاف الصوت
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                playIcon.classList.replace('fa-play', 'fa-pause');
+            } else {
+                audio.pause();
+                playIcon.classList.replace('fa-pause', 'fa-play');
+            }
+        }
+
+        // كتم الصوت
+        function toggleMute() {
+            audio.muted = !audio.muted;
+            if (audio.muted) {
+                muteIcon.classList.replace('fa-volume-up', 'fa-volume-mute');
+            } else {
+                muteIcon.classList.replace('fa-volume-mute', 'fa-volume-up');
+            }
+        }
+
+        // تقديم وترجيع 5 ثواني
+        function skip(seconds) {
+            audio.currentTime += seconds;
+        }
+
+        // تنسيق الوقت
+        function formatTime(sec) {
+            if (isNaN(sec)) return "0:00";
+            const minutes = Math.floor(sec / 60);
+            const seconds = Math.floor(sec % 60);
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        // تحديث شريط التقدم
+        audio.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audio.duration);
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const progress = (audio.currentTime / audio.duration) * 100;
+                progressBar.value = progress;
+                currentTimeEl.textContent = formatTime(audio.currentTime);
+            }
+        });
+
+        progressBar.addEventListener('input', () => {
+            if (audio.duration) {
+                audio.currentTime = (progressBar.value / 100) * audio.duration;
+            }
+        });
+    </script>
+</body>
+</html>
